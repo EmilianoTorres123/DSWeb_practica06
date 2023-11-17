@@ -12,5 +12,5 @@ import java.util.List;
  * @author aaron-emiliano
  */
 public interface RepositoryDetalle extends JpaRepository<VentaDetalle, Long> {
-    List<VentaDetalle> findByVentaId(Long id);
+   
 }
