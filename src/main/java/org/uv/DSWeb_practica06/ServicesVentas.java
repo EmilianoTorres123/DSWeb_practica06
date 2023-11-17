@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.uv.DSWeb_practica06.data.RepositoryDetalle;
 import org.uv.DSWeb_practica06.data.RepositoryVentas;
-
+import java.util.Optional;
 /**
  *
  * @author aaron-emiliano
@@ -60,6 +60,49 @@ public class ServicesVentas{
         return detalles.stream()
                 .map(detalle -> detalle.getPrecio().multiply(BigDecimal.valueOf(detalle.getCantidad())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    
+    public List<Venta> obtenerTodasLasVentas() {
+        return ventaRepository.findAll();
+    }
+
+    public Optional<Venta> obtenerVentaPorId(Long id) {
+        return ventaRepository.findById(id);
+    }
+
+    public Venta actualizarVenta(Long id, Venta ventaDTO) {
+        Optional<Venta> optionalVenta = ventaRepository.findById(id);
+        if (optionalVenta.isPresent()) {
+            Venta ventaExistente = optionalVenta.get();
+            ventaExistente.setFecha(ventaDTO.getFecha());
+            ventaExistente.setTotal(ventaDTO.getTotal());
+
+            // Actualizar detalles (puedes implementar lógica específica según tus necesidades)
+
+            BigDecimal total = calcularTotalVenta(ventaExistente.getVentasDetalle());
+            ventaExistente.setTotal(total);
+
+            // Guardar la venta actualizada
+            return ventaRepository.save(ventaExistente);
+        } else {
+            // Manejo de error: la venta no existe
+            // Puedes lanzar una excepción, devolver un resultado especial, etc.
+            return null;
+        }
+    }
+
+    public void eliminarVenta(Long id) {
+        Optional<Venta> optionalVenta = ventaRepository.findById(id);
+        if (optionalVenta.isPresent()) {
+            Venta venta = optionalVenta.get();
+            // Eliminar detalles asociados (opcional, dependiendo de tus requisitos)
+            ventaDetalleRepository.deleteAll(venta.getVentasDetalle());
+            // Eliminar la venta
+            ventaRepository.deleteById(id);
+        } else {
+            // Manejo de error: la venta no existe
+            // Puedes lanzar una excepción, devolver un resultado especial, etc.
+        }
     }
 }
 

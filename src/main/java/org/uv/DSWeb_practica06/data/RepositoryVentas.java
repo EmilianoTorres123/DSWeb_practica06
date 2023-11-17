@@ -12,5 +12,4 @@ import java.util.List;
  * @author aaron-emiliano
  */
 public interface RepositoryVentas extends JpaRepository<Venta, Long> {
-    List<Venta> findByVentaId(Long id);
 }
