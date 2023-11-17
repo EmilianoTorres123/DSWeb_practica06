@@ -57,5 +57,5 @@ public class Controllerventas {
     public ResponseEntity<?> delete(@PathVariable String id) {
         return null;
     }
-    
+    //este es controller de ventas
 }
