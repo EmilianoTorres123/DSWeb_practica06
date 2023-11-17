@@ -23,6 +23,7 @@ import org.uv.DSWeb_practica06.Venta;
 /**
  *
  * @author aaron-emiliano
+ * Crear controller de ventas
  */
 @RestController
 @RequestMapping("/api/ventas")
