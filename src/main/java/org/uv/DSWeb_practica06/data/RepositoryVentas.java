@@ -6,11 +6,11 @@ package org.uv.DSWeb_practica06.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.uv.DSWeb_practica06.Venta;
-
+import java.util.List;
 /**
  *
  * @author aaron-emiliano
  */
 public interface RepositoryVentas extends JpaRepository<Venta, Long> {
-    
+    List<Venta> findByVentaId(Long id);
 }
